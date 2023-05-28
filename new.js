@@ -1,11 +1,11 @@
-
 let modal = document.getElementById("myModal");
-
 let images = document.querySelectorAll(".card-list .movie-card img");
-
 let modalMovieId = document.getElementById("modalMovieId");
+let span = document.getElementsByClassName("close")[0];
+let searchInput = document.getElementById("search-input");
+let searchButton = document.getElementById("search-btn");
 
-function openModal(event) {
+const openModal = (event) => {
   event.preventDefault();
 
   let card = event.target.closest(".movie-card");
@@ -14,43 +14,34 @@ function openModal(event) {
   modalMovieId.textContent = "Movie ID: " + movieId;
 
   modal.style.display = "block";
-}
+};
 
-images.forEach(function(image) {
+const closeModal = () => {
+  modal.style.display = "none";
+};
+
+images.forEach((image) => {
   image.addEventListener("click", openModal);
 });
 
-let span = document.getElementsByClassName("close")[0];
-
-function closeModal() {
-  modal.style.display = "none";
-}
-
 span.addEventListener("click", closeModal);
 
-window.addEventListener("click", function(event) {
+window.addEventListener("click", (event) => {
   if (event.target == modal) {
     closeModal();
   }
 });
 
-let searchInput = document.getElementById("search-input");
-let searchButton = document.getElementById("search-btn");
-
-function handleSearch(event) {
+searchButton.addEventListener("click", (event) => {
   event.preventDefault();
 
   let searchQuery = searchInput.value.trim();
 
   searchInput.value = "";
 
-  filterMovies(searchQuery);
-}
-
-function filterMovies(searchQuery) {
   let movieCards = document.querySelectorAll(".movie-card");
 
-  movieCards.forEach(function(card) {
+  movieCards.forEach((card) => {
     let title = card.querySelector("h3").textContent;
     let cardId = card.id;
 
@@ -60,6 +51,4 @@ function filterMovies(searchQuery) {
       card.style.display = "none";
     }
   });
-}
-
-searchButton.addEventListener("click", handleSearch);
+});
